@@ -5,26 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
 
 import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String url = "http://i.imgur.com/7spzG.png";
-    private final String TAG = "MY_TAG";
-    private ImageLoader imageLoader;
-    private NetworkImageView networkImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
 
-        imageLoader = MySingleton.getInstance(this.getApplicationContext()).getImageLoader();
-        networkImageView.setImageUrl(url , imageLoader);
+
 
     }
 
