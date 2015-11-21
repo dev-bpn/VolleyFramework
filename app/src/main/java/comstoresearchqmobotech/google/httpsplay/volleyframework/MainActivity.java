@@ -1,16 +1,52 @@
 package comstoresearchqmobotech.google.httpsplay.volleyframework;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import comstoresearchqmobotech.google.httpsplay.volleyframework.utils.MyUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String url = "https://www.google.com";
+    RequestQueue requestQueue;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = (TextView) findViewById(R.id.textView);
+        myStringRequest();
+
+    }
+
+    private void myStringRequest(){
+
+        if(MyUtils.isNetworkConnected(this)) {
+            requestQueue = Volley.newRequestQueue(this);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    textView.setText("Succeed: " + response.substring(0 , 100));
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    textView.setText("Error: " + error.toString());
+                }
+            });
+            requestQueue.add(stringRequest);
+        }
     }
 
     @Override
