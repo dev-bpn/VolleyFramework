@@ -18,8 +18,9 @@ import comstoresearchqmobotech.google.httpsplay.volleyframework.utils.MyUtils;
 public class MainActivity extends AppCompatActivity {
 
     private String url = "https://www.google.com";
-    RequestQueue requestQueue;
-    TextView textView;
+    private RequestQueue requestQueue;
+    private TextView textView;
+    private static final String MY_TAG = "tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,16 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("Error: " + error.toString());
                 }
             });
+            stringRequest.setTag(MY_TAG);
             requestQueue.add(stringRequest);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(requestQueue != null){
+            requestQueue.cancelAll(MY_TAG);
         }
     }
 
