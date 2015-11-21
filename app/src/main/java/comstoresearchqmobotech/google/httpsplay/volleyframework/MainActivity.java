@@ -1,55 +1,56 @@
 package comstoresearchqmobotech.google.httpsplay.volleyframework;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.ImageRequest;
 
 import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
 import comstoresearchqmobotech.google.httpsplay.volleyframework.utils.MyUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String url = "https://www.google.com";
-    private TextView textView;
-    private RequestQueue requestQueue;
+    private String url = "http://i.imgur.com/7spzG.png";
+    private ImageView imageView;
     private final String TAG = "MY_TAG";
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.textView);
-        myStringRequestUsingSingleton();
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        myImageRequestUsingSingleton();
 
     }
 
-    private void myStringRequestUsingSingleton(){
+
+    private void myImageRequestUsingSingleton(){
 
         if(MyUtils.isNetworkConnected(this)){
 
             requestQueue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            final ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
                 @Override
-                public void onResponse(String response) {
-                    textView.setText("Response: " + response.substring(0 , 200));
+                public void onResponse(Bitmap response) {
+                    imageView.setImageBitmap(response);
                 }
-            }, new Response.ErrorListener() {
+            }, 800, 500, null, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    textView.setText("Error: "+ error.toString());
+                    imageView.setImageResource(R.mipmap.ic_launcher);
                 }
             });
-            stringRequest.setTag(TAG);
-            MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+            MySingleton.getInstance(this).addToRequestQueue(imageRequest);
 
         }
     }
