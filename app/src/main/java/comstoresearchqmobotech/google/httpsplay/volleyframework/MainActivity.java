@@ -6,9 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+
+import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
+import comstoresearchqmobotech.google.httpsplay.volleyframework.utils.MyUtils;
+
 public class MainActivity extends AppCompatActivity {
 
-    private final String URL = "";
+    private final String URL = "http://api.androidhive.info/volley/person_array.json";
     private TextView textView;
 
     @Override
@@ -17,11 +27,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView);
 
-
+        myJsonArrayRequest();
 
     }
 
+    private void myJsonArrayRequest() {
 
+        if(MyUtils.isNetworkConnected(this)){
+
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    textView.setText("Response: " + response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    textView.setText("Error: "+ error);
+                }
+            });
+            MySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
+        }
+    }
 
 
     @Override
