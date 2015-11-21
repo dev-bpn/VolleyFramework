@@ -4,30 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-
-import com.android.volley.toolbox.ImageLoader;
-
-import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
 
 public class MainActivity extends AppCompatActivity {
 
     private String url = "http://i.imgur.com/7spzG.png";
-    private ImageView imageView;
     private final String TAG = "MY_TAG";
-    private ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = (ImageView) findViewById(R.id.imageView);
 
-        imageLoader = MySingleton.getInstance(this).getImageLoader();
-        imageLoader.get(url , ImageLoader.getImageListener(imageView , R.mipmap.ic_launcher , R.mipmap.ic_launcher));
 
     }
-    
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
