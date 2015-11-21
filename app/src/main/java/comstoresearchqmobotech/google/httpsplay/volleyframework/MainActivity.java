@@ -6,14 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+
+import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
 
 public class MainActivity extends AppCompatActivity {
 
     private String url = "http://i.imgur.com/7spzG.png";
     private ImageView imageView;
     private final String TAG = "MY_TAG";
-    private RequestQueue requestQueue;
+    private ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +23,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        imageLoader = MySingleton.getInstance(this).getImageLoader();
+        imageLoader.get(url , ImageLoader.getImageListener(imageView , R.mipmap.ic_launcher , R.mipmap.ic_launcher));
 
     }
-
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(requestQueue != null){
-            requestQueue.cancelAll(TAG);
-        }
-    }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
