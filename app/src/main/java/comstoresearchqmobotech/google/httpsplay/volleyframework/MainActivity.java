@@ -16,6 +16,9 @@ import org.json.JSONArray;
 import comstoresearchqmobotech.google.httpsplay.volleyframework.my_volley.MySingleton;
 import comstoresearchqmobotech.google.httpsplay.volleyframework.utils.MyUtils;
 
+// CHECK THIS LINK
+// http://www.androidhive.info/2014/05/android-working-with-volley-library-1/
+
 public class MainActivity extends AppCompatActivity {
 
     private final String URL = "http://api.androidhive.info/volley/person_array.json";
